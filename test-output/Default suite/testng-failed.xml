@@ -5,7 +5,7 @@
     <classes>
       <class name="GetCall.TC001_GET_Request">
         <methods>
-          <include name="getweatherDetails"/>
+          <include name="guru99Datachecking"/>
         </methods>
       </class> <!-- GetCall.TC001_GET_Request -->
     </classes>
