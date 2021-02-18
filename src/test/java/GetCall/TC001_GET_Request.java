@@ -9,6 +9,9 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import static io.restassured.RestAssured.*;
 
+import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+
 public class TC001_GET_Request {
 
 	@Test(priority = 0, enabled = false)
@@ -81,6 +84,8 @@ public class TC001_GET_Request {
 	public void guru99Datachecking() {
 		getResponseBody();
 		getResponseStatus();
+		System.out.println("Last***************Data");
+		getSpecificPartOfResponseBody();
 	}
 
 	// Guru99 input data
@@ -103,6 +108,12 @@ public class TC001_GET_Request {
 		System.out.println("Content type is::::" + get(url).contentType());
 		System.out.println("Hash Code is::::" + get(url).hashCode());
 		System.out.println("Time is:  " + get(url).time());
+		// Header Value
+		System.out.println("Header Value IS:::::" + get(url).then().extract().headers());
+		// response time
+		System.out.println(
+				"The time taken to fetch the response " + get(url).timeIn(TimeUnit.MILLISECONDS) + " MILLISECONDS");
+		System.out.println();
 	}
 
 	public static void getResponseStatus() {
@@ -111,4 +122,17 @@ public class TC001_GET_Request {
 		System.out.println("The response status is " + statusCode);
 
 	}
+	
+	public static void getSpecificPartOfResponseBody(){
+
+		ArrayList<String> amounts = when().get(url).then().extract().path("result.statements.AMOUNT") ;
+		int sumOfAll=0;
+		for(String a:amounts){
+
+		    System.out.println("The amount value fetched is "+a);
+		    sumOfAll=sumOfAll+Integer.valueOf(a);
+		}
+		System.out.println("The total amount is "+sumOfAll);
+
+		}
 }
